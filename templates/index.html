@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mental Health Checker</title>
+
+  <!-- Google font for a modern look -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- Your custom stylesheet -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <h1>Mental Health Checker</h1>
+      <p class="tagline">Get a quick well‑being snapshot in seconds</p>
+    </header>
+
+    <form action="/predict" method="post" id="mh-form">
+      <div class="field">
+        <label>Hours of Sleep per Day</label>
+        <input type="number" name="sleep" min="0" max="24" required>
+      </div>
+
+      <div class="field slider-field">
+        <label>Stress Level <span id="stressValue">5</span> /10</label>
+        <input type="range" name="stress" id="stressSlider" min="1" max="10" value="5">
+      </div>
+
+      <div class="field">
+        <label>Feeling Low / Depressed?</label>
+        <select name="depression" required>
+          <option value="0">No</option>
+          <option value="1">Yes</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Loss of Appetite?</label>
+        <select name="appetite" required>
+          <option value="0">No</option>
+          <option value="1">Yes</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Concentration Issues?</label>
+        <select name="focus" required>
+          <option value="0">No</option>
+          <option value="1">Yes</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn">Check My Mental Health</button>
+    </form>
+  </div>
+
+  <!-- Live update for stress slider -->
+  <script>
+    const slider   = document.getElementById('stressSlider');
+    const valLabel = document.getElementById('stressValue');
+    slider.addEventListener('input', () => { valLabel.textContent = slider.value; });
+  </script>
+</body>
+</html>
