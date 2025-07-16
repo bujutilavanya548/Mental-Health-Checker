@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Mental Health Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <h1>Your Mental Health Status</h1>
+            <p class="tagline">{{ status }}</p>
+        </header>
+
+        <h3>Suggestions for You </h3>
+        <ul>
+            {% for tip in tips %}
+                <li> {{ tip }}</li>
+            {% endfor %}
+        </ul>
+
+        <br>
+        <a href="/">Check Again</a>
+    </div>
+</body>
+</html>

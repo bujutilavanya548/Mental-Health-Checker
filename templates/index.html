@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mental Health Checker</title>
+
+  <!-- Google font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f8f9fa;
+      margin: 0;
+      padding: 0;
+    }
+    .wrapper {
+      max-width: 600px;
+      margin: 20px auto;
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap; /* allows wrapping on smaller screens */
+      text-align: center;
+    }
+
+    header img {
+      width: 100px;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 24px;
+      color: #333;
+    }
+
+    .tagline {
+      font-size: 14px;
+      color: #666;
+      margin: 4px 0 0;
+    }
+
+    .field {
+      margin-bottom: 16px;
+    }
+
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    input[type=number], select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    input[type=range] {
+      width: 100%;
+    }
+
+    .group-box {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      margin-top: 10px;
+      background: #f1f1f1;
+    }
+
+    .btn {
+      background: #28a745;
+      color: #fff;
+      border: none;
+      padding: 12px 18px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+    }
+    .btn:hover {
+      background: #218838;
+    }
+
+    /* Spinner overlay */
+    #spinnerOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255,255,255,0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      display: none;
+    }
+    .spinner {
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid #4CAF50;
+      border-radius: 50%;
+      width: 70px;
+      height: 70px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* ✅ Make it responsive for small screens */
+    @media (max-width: 480px) {
+      .wrapper {
+        margin: 10px;
+        padding: 15px;
+      }
+      header {
+        flex-direction: column; /* stack image and text vertically */
+        gap: 10px;
+      }
+      header img {
+        width: 80px;
+      }
+      h1 {
+        font-size: 20px;
+      }
+      .btn {
+        font-size: 15px;
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Spinner overlay -->
+  <div id="spinnerOverlay">
+    <div class="spinner"></div>
+  </div>
+
+  <div class="wrapper">
+    <header>
+      <img src="{{ url_for('static', filename='mental_health.jpeg') }}" alt="Logo">
+      <div>
+        <h1>Mental Health Checker</h1>
+        <p class="tagline">Get a quick well‑being snapshot in seconds</p>
+      </div>
+    </header>
+
+    <form action="/predict" method="post" id="mh-form">
+      <div class="field">
+        <label>Hours of Sleep per Day</label>
+        <input type="number" name="sleep" min="0" max="24" required>
+      </div>
+
+      <!-- Grouped box -->
+      <div class="group-box">
+        <div class="field slider-field">
+          <label>Stress Level <span id="stressValue">5</span> /10</label>
+          <input type="range" name="stress" id="stressSlider" min="1" max="10" value="5">
+        </div>
+
+        <div class="field">
+          <label>Feeling Low / Depressed?</label>
+          <select name="depression" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Loss of Appetite?</label>
+          <select name="appetite" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Concentration Issues?</label>
+          <select name="focus" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+      </div>
+
+      <button type="submit" class="btn">Check My Mental Health</button>
+    </form>
+  </div>
+
+  <script>
+    // live slider update
+    const slider = document.getElementById('stressSlider');
+    const valLabel = document.getElementById('stressValue');
+    slider.addEventListener('input', () => {
+      valLabel.textContent = slider.value;
+    });
+
+    // spinner show
+    const form = document.getElementById('mh-form');
+    const spinnerOverlay = document.getElementById('spinnerOverlay');
+    form.addEventListener('submit', function() {
+      spinnerOverlay.style.display = 'flex';
+    });
+  </script>
+</body>
+</html>
