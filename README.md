@@ -12,6 +12,7 @@ It also provides helpful suggestions like diet, exercise, mindfulness.
 1. Install requirements: `pip install -r requirements.txt`  
 2. Run: `python app.py`  
 3. Open: `http://127.0.0.1:5000`
+4. Live Demo : https://mental-health-checker-5tae.onrender.com
    
 # Images of Output
 <img width="541" height="889" alt="Screenshot 2025-07-21 125420" src="https://github.com/user-attachments/assets/8d6191b1-5364-47f5-a5ef-be345a163167" />
